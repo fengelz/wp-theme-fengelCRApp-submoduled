@@ -1,0 +1,34 @@
+{
+  "name": "reactive-templates",
+  "license": "MIT License",
+  "version": "0.1.0",
+  "private": false,
+  "scripts": {},
+  "engines": {
+    "node": "9.5.0"
+  },
+  "dependencies": {
+    "gulp-replace": "^1.0.0",
+    "react-render-html": "^0.6.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.51",
+    "@babel/preset-env": "^7.0.0-beta.51",
+    "@babel/preset-react": "^7.0.0-beta.51",
+    "@babel/register": "^7.0.0-beta.51",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-babel": "^7.0.1",
+    "gulp-flatten": "0.4.0",
+    "gulp-html-beautify": "^1.0.1",
+    "gulp-live-server": "^0.0.31",
+    "gulp-rename": "^1.3.0",
+    "gulp-render-react": "^3.1.3",
+    "gulp-sass": "^4.0.1",
+    "gulp-sass-glob": "^1.0.9",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-watch": "^4.3.11",
+    "path": "^0.12.7",
+    "react": "^16.4.0"
+  }
+}

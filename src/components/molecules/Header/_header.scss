@@ -1,0 +1,26 @@
+header {
+  &>div {
+    height: 100%;
+    overflow: hidden;
+  }
+  height: 120px;
+  nav {
+    height: 50%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    &.main-nav {
+      font-size: 1.125rem;
+    }
+  }
+  ul {
+    align-items: flex-end;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+      padding: 0 .5rem;
+      white-space: nowrap;
+    }
+  }
+}

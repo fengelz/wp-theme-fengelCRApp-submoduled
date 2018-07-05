@@ -1,0 +1,8 @@
+@import 'normalize';
+@import 'settings';
+@import 'colors';
+@import 'typography';
+@import 'global-styles';
+@import 'main';
+
+@import '../components/**/*.scss';
