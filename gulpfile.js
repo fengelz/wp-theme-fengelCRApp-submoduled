@@ -12,6 +12,7 @@ const rename = require("gulp-rename")
 const replace = require('gulp-replace')
 const htmlbeautify = require('gulp-html-beautify')
 const inject = require('gulp-inject')
+const clean = require('gulp-clean')
 
 gulp.task('default', [
   'build-php',
@@ -31,7 +32,12 @@ const paths = {
   public: path.join(__dirname, 'public/')
 }
 
-gulp.task('build-php', () => {
+gulp.task('clean', function () {
+  return gulp.src(paths.public, {read: false})
+    .pipe(clean());
+});
+
+gulp.task('build-php', ['clean'], () => {
   gulp.src(paths.components + 'pages/**/*.js')
     .pipe(reactRender({type: 'markup'}))
     .pipe(flatten())
@@ -50,7 +56,7 @@ gulp.task('build-php', () => {
 
 
 
-gulp.task('build-sass', () => {
+gulp.task('build-sass', ['clean'], () => {
   return gulp
     .src(paths.scss + '/styles.scss')
     .pipe(sassGlob())
@@ -71,17 +77,17 @@ gulp.task('build-sass', () => {
     .pipe(gulp.dest(paths.public + '/assets/css/'))
 })
 
-gulp.task('copy-assets', () => {
+gulp.task('copy-assets', ['clean'], () => {
   gulp.src([ paths.assets + '**/*' ])
     .pipe(gulp.dest(paths.public))
 })
 
-gulp.task('copy-crapp', () => {
+gulp.task('copy-crapp', ['clean'], () => {
   gulp.src([ paths.fengelCRApp + 'build/static/**/*' ])
     .pipe(gulp.dest(paths.public + 'assets'))
 })
 
-gulp.task('inject-scripts', () => {
+gulp.task('inject-scripts', ['clean'], () => {
   var sources = gulp.src([paths.public + 'assets/**/*.js', paths.public + 'assets/**/*.css'], {read: false});
   setTimeout(() => {
     return gulp.src(paths.public + '*.php')
@@ -91,7 +97,7 @@ gulp.task('inject-scripts', () => {
   
 })
 
-gulp.task('serve', () => {
+gulp.task('serve', ['clean'], () => {
   var server = gls.static('public', 3000)
   server.start()
   gulp
@@ -101,7 +107,7 @@ gulp.task('serve', () => {
     .on('error', onError)
 })
 
-gulp.task('watch', () => {
+gulp.task('watch', ['clean'], () => {
   gulp.watch(paths.scss + '**/*.scss', ['build-sass'])
   gulp.watch(paths.components + '**/*.scss', ['build-sass'])
   gulp.watch(paths.components + '**/*.js', ['build-php'])
