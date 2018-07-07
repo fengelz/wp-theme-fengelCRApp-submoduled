@@ -75,7 +75,6 @@ gulp.task('copy-assets', () => {
 })
 
 gulp.task('copy-crapp', () => {
-  console.log(paths.fengelCRApp + 'build/static')
   gulp.src([ paths.fengelCRApp + 'build/static/**/*' ])
     .pipe(gulp.dest(paths.public + 'assets'))
 })
