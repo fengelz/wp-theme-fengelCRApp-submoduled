@@ -26,11 +26,16 @@
     <link rel="manifest" href="site.webmanifest" />
     <link rel="apple-touch-icon" href="icon.png" />
     <link rel="stylesheet" href="assets/css/styles.css" />
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/wp-content/themes/wp-theme-fengelCRApp/assets/css/main.fe0d0930.css">
+    <!-- endinject -->
 </head>
 
 <body><noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <script type="text/javascript" src="/wp-content/themes/wp-theme-fengelCRApp/static/js/main.46e35c66.js"></script>
+    <!-- inject:js -->
+    <script src="/wp-content/themes/wp-theme-fengelCRApp/assets/js/main.830e807b.js"></script>
+    <!-- endinject -->
 </body>
 
 </html>

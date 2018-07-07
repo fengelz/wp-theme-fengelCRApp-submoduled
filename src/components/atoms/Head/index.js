@@ -11,6 +11,7 @@ function Head(props) {
       <link rel="manifest" href="site.webmanifest" />
       <link rel="apple-touch-icon" href="icon.png" />
       <link rel="stylesheet" href="assets/css/styles.css" />
+      {'<!-- inject:css --><!-- endinject -->'}
       { props.children }
     </head>
   )

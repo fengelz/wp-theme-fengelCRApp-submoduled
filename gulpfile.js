@@ -11,13 +11,15 @@ const gls = require('gulp-live-server')
 const rename = require("gulp-rename")
 const replace = require('gulp-replace')
 const htmlbeautify = require('gulp-html-beautify')
+const inject = require('gulp-inject')
 
 gulp.task('default', [
   'build-php',
   'build-sass',
   'copy-assets',
   'copy-crapp',
-  'init',
+  'inject-scripts',
+  'watch',
   'serve',
 ])
 
@@ -28,8 +30,6 @@ const paths = {
   fengelCRApp: path.join(__dirname, 'fengel.com-crapp/'),
   public: path.join(__dirname, 'public/')
 }
-
-gulp.task('build-public', ['build-php', 'build-sass', 'copy-assets'])
 
 gulp.task('build-php', () => {
   gulp.src(paths.components + 'pages/**/*.js')
@@ -47,6 +47,8 @@ gulp.task('build-php', () => {
     .pipe(htmlbeautify({indentSize: 2}))
     .pipe(gulp.dest(paths.public))
 })
+
+
 
 gulp.task('build-sass', () => {
   return gulp
@@ -79,6 +81,16 @@ gulp.task('copy-crapp', () => {
     .pipe(gulp.dest(paths.public + 'assets'))
 })
 
+gulp.task('inject-scripts', () => {
+  var sources = gulp.src([paths.public + 'assets/**/*.js', paths.public + 'assets/**/*.css'], {read: false});
+  setTimeout(() => {
+    return gulp.src(paths.public + '*.php')
+    .pipe(inject(sources, {ignorePath: 'public', addPrefix: '/wp-content/themes/wp-theme-fengelCRApp'}))
+    .pipe(gulp.dest(paths.public))
+  }, 3000)
+  
+})
+
 gulp.task('serve', () => {
   var server = gls.static('public', 3000)
   server.start()
@@ -89,7 +101,7 @@ gulp.task('serve', () => {
     .on('error', onError)
 })
 
-gulp.task('init', () => {
+gulp.task('watch', () => {
   gulp.watch(paths.scss + '**/*.scss', ['build-sass'])
   gulp.watch(paths.components + '**/*.scss', ['build-sass'])
   gulp.watch(paths.components + '**/*.js', ['build-php'])
