@@ -16,6 +16,7 @@ gulp.task('default', [
   'build-php',
   'build-sass',
   'copy-assets',
+  'copy-crapp',
   'init',
   'serve',
 ])
@@ -24,7 +25,8 @@ const paths = {
   components: path.join(__dirname, 'src/components/'),
   scss: path.join(__dirname, 'src/scss/'),
   assets: path.join(__dirname, 'src/assets/'),
-  public: path.join(__dirname, 'public')
+  fengelCRApp: path.join(__dirname, 'fengel.com-crapp/'),
+  public: path.join(__dirname, 'public/')
 }
 
 gulp.task('build-public', ['build-php', 'build-sass', 'copy-assets'])
@@ -70,6 +72,12 @@ gulp.task('build-sass', () => {
 gulp.task('copy-assets', () => {
   gulp.src([ paths.assets + '**/*' ])
     .pipe(gulp.dest(paths.public))
+})
+
+gulp.task('copy-crapp', () => {
+  console.log(paths.fengelCRApp + 'build/static')
+  gulp.src([ paths.fengelCRApp + 'build/static/**/*' ])
+    .pipe(gulp.dest(paths.public + 'assets'))
 })
 
 gulp.task('serve', () => {

@@ -1,0 +1,3 @@
+[submodule "fengel.com-crapp"]
+	path = fengel.com-crapp
+	url = https://github.com/fengelz/fengel.com-crapp.git
