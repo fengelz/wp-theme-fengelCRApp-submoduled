@@ -33,8 +33,8 @@ const paths = {
 }
 
 gulp.task('clean', function () {
-  return gulp.src(paths.public, {read: false})
-    .pipe(clean());
+  // return gulp.src(paths.public, {read: false})
+  //   .pipe(clean());
 });
 
 gulp.task('build-php', ['clean'], () => {
@@ -93,7 +93,7 @@ gulp.task('inject-scripts', ['clean'], () => {
     return gulp.src(paths.public + '*.php')
     .pipe(inject(sources, {ignorePath: 'public', addPrefix: '/wp-content/themes/wp-theme-fengelCRApp'}))
     .pipe(gulp.dest(paths.public))
-  }, 3000)
+  }, 5000)
   
 })
 

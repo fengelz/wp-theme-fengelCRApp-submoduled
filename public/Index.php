@@ -25,14 +25,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="manifest" href="site.webmanifest" />
     <link rel="apple-touch-icon" href="icon.png" />
-    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <!-- inject:css -->
+    <link rel="stylesheet" href="/wp-content/themes/wp-theme-fengelCRApp/assets/css/main.a8939171.css">
     <!-- endinject -->
 </head>
 
 <body><noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!-- inject:js -->
+    <script src="/wp-content/themes/wp-theme-fengelCRApp/assets/js/main.9a2ece75.js"></script>
     <!-- endinject -->
 </body>
 
