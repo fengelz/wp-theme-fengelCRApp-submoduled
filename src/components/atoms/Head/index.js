@@ -3,10 +3,10 @@ import React from 'react'
 function Head(props) {
   return (
     <head>
-      <meta charset="utf-8" />
-      <meta http-equiv="x-ua-compatible" content="ie=edge" />
-      <title>{ props.title || 'Template title'}</title>
-      <meta name="description" content="" />
+      <meta charSet={`<?php bloginfo('charset'); ?>`} />
+      <meta httpEquiv="x-ua-compatible" content="ie=edge" />
+      <title>{`<?php bloginfo('title'); ?>`}</title>
+      <meta name="description" content={'test'} />
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
       <link rel="manifest" href="site.webmanifest" />
       <link rel="apple-touch-icon" href="icon.png" />

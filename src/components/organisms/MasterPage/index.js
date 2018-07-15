@@ -3,7 +3,7 @@ import Html from '../../atoms/Html'
 import Head from '../../atoms/Head'
 import Body from '../../atoms/Body'
 
-function MastePage(props) {
+function MasterPage(props) {
   return (
     <Html>
       {`<!--<?php
@@ -23,7 +23,7 @@ function MastePage(props) {
          * @version 1.0
          */
       ?>-->`}
-      <Head title={props.title} />
+      <Head title={props.title}></Head>
       <Body className={props.className || ''}>
         { props.children }
       </Body>
@@ -31,4 +31,4 @@ function MastePage(props) {
   )
 }
 
-export default MastePage
+export default MasterPage

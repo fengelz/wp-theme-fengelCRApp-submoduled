@@ -1595,6 +1595,18 @@ event-stream@^3.1.0:
     stream-combiner "~0.0.4"
     through "~2.3.1"
 
+event-stream@~3.0.18:
+  version "3.0.20"
+  resolved "http://registry.npmjs.org/event-stream/-/event-stream-3.0.20.tgz#038bbb2ea9ea90385b26fbc1854d0b539f2abea3"
+  dependencies:
+    duplexer "~0.1.1"
+    from "~0"
+    map-stream "~0.0.3"
+    pause-stream "0.0.11"
+    split "0.2"
+    stream-combiner "~0.0.3"
+    through "~2.3.1"
+
 event-stream@~3.2.1:
   version "3.2.2"
   resolved "http://registry.npmjs.org/event-stream/-/event-stream-3.2.2.tgz#f79f9984c07ee3fd9b44ffb3cd0422b13e24084d"
@@ -2147,6 +2159,12 @@ gulp-inject@^4.3.2:
     plugin-error "^0.1.2"
     stream-to-array "^2.3.0"
     through2 "^2.0.1"
+
+gulp-intercept@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/gulp-intercept/-/gulp-intercept-0.1.0.tgz#9de45c300166c9d9d9fdcb8eeff860e9767c16df"
+  dependencies:
+    event-stream "~3.0.18"
 
 gulp-live-server@^0.0.31:
   version "0.0.31"
@@ -3028,6 +3046,10 @@ map-cache@^0.2.0, map-cache@^0.2.2:
 map-obj@^1.0.0, map-obj@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-1.0.1.tgz#d933ceb9205d82bdcf4886f6742bdc2b4dea146d"
+
+map-stream@~0.0.3:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/map-stream/-/map-stream-0.0.7.tgz#8a1f07896d82b10926bd3744a2420009f88974a8"
 
 map-stream@~0.1.0:
   version "0.1.0"
@@ -4309,6 +4331,12 @@ split-string@^3.0.1, split-string@^3.0.2:
   dependencies:
     extend-shallow "^3.0.0"
 
+split@0.2:
+  version "0.2.10"
+  resolved "https://registry.yarnpkg.com/split/-/split-0.2.10.tgz#67097c601d697ce1368f418f06cd201cf0521a57"
+  dependencies:
+    through "2"
+
 split@0.3:
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/split/-/split-0.3.3.tgz#cd0eea5e63a211dfff7eb0f091c4133e2d0dd28f"
@@ -4359,7 +4387,7 @@ stdout-stream@^1.4.0:
   dependencies:
     readable-stream "^2.0.1"
 
-stream-combiner@~0.0.4:
+stream-combiner@~0.0.3, stream-combiner@~0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/stream-combiner/-/stream-combiner-0.0.4.tgz#4d5e433c185261dde623ca3f44c586bcf5c4ad14"
   dependencies:

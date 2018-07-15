@@ -1,10 +1,8 @@
 
-import { start, src, dest, watch as watchSrc, parallel, series } from 'gulp'
+import { src, dest, watch as watchSrc, parallel, series } from 'gulp'
 import del from 'del'
-// import path from 'path'
 import sass from 'gulp-sass'
 import sassGlob from 'gulp-sass-glob'
-import path from 'path'
 import flatten from 'gulp-flatten'
 import reactRender from 'gulp-render-react'
 import autoprefixer from 'gulp-autoprefixer'
@@ -14,10 +12,10 @@ import rename from 'gulp-rename'
 import replace from 'gulp-replace'
 import htmlbeautify from 'gulp-html-beautify'
 import inject from 'gulp-inject'
+import intercept from 'gulp-intercept'
+import React from 'react'
+import ReactDOMServer from 'react-dom/server'
 
-// gulp.task('default', 
-//   clean
-// )
 const paths = {
   components: 'src/components/',
   scss: 'src/scss/',
@@ -26,19 +24,21 @@ const paths = {
   public: './public/'
 }
 
-const publicPath = 'public'
-
 export const clean = () => {
   return del([paths.public])
 }
 
 export const buildPhp = () => {
   return src(paths.components + 'pages/**/*.js')
+  .pipe(intercept(function(file){
+    return file;
+  })) 
   .pipe(reactRender({type: 'markup'}))
   .pipe(flatten())
   .pipe(rename(function (path) {
     path.extname = ".php";
   }))
+  .pipe(replace('&#x27;', "'"))
   .pipe(replace('&lt;?', '<?'))
   .pipe(replace('?&gt;', '?>'))
   .pipe(replace('&lt;!--', '<!--'))
@@ -88,19 +88,28 @@ export const injectScripts = () => {
 
 export const serve = () => {
   const server = gls.static('public', 3000)
-  server.start()
   watchSrc(['public/**/*.css', 'public/*.html'], function(file) {
-      server.notify(file).on('error', onError)
-    })
-    .on('error', onError)
+    server.notify(file).on('error', onError)
+  })
+  .on('error', onError)
+  server.start()
 }
 
-export const watch = () => {
-  watchSrc(paths.scss + '**/*.scss', ['build-sass'])
-  watchSrc(paths.components + '**/*.scss', ['build-sass'])
-  watchSrc(paths.components + '**/*.js', ['build-php', 'inject-scripts'])
-  watchSrc(paths.assets + '**/*.*', {cwd: './'}, ['copy-assets'])
+const watchStyles = () => {
+  return watchSrc(paths.scss + '**/*.scss', buildSass)  
 }
+const watchComponentStyles = () => {
+  return watchSrc(paths.components + '**/*.scss', buildSass)
+}
+const watchJs = () => {
+  return watchSrc(paths.components + '**/*.js', buildPhp)
+}
+const watchAssets = () => {
+  return watchSrc(paths.assets + '**/*.*', {cwd: './'}, copyAssets)
+}
+
+const watchAll = parallel(watchStyles, watchComponentStyles, watchJs, watchAssets)
+watchAll.description = 'watch for changes to all source'
 
 const onError = (error) => {
   console.log("ERROR:", error.message)
@@ -111,8 +120,10 @@ const onError = (error) => {
 }
 
 export const parallelTasks = parallel(buildPhp, buildSass, copyAssets, copyCrapp)
+export const watchAndServe = parallel(watchAll)
+export const buildInject = series(buildPhp, injectScripts)
 
-export const build = series(clean, parallelTasks, injectScripts, serve)
+export const build = series(clean, parallelTasks, injectScripts, watchAndServe)
 
 
 
