@@ -12,9 +12,6 @@ import rename from 'gulp-rename'
 import replace from 'gulp-replace'
 import htmlbeautify from 'gulp-html-beautify'
 import inject from 'gulp-inject'
-import intercept from 'gulp-intercept'
-import React from 'react'
-import ReactDOMServer from 'react-dom/server'
 
 const paths = {
   components: 'src/components/',
@@ -28,11 +25,20 @@ export const clean = () => {
   return del([paths.public])
 }
 
+const clearRequireCache = () => {
+  if(require.cache) {
+    for (const moduleId of Object.keys(require.cache)) {
+      if (moduleId.toString().indexOf('/src/') > 0) {
+      delete require.cache[require.resolve(moduleId)]
+      }
+    }
+  }
+  
+  return src(paths.components)
+}
+
 export const buildPhp = () => {
-  return src(paths.components + 'pages/**/*.js')
-  .pipe(intercept(function(file){
-    return file;
-  })) 
+  return src(`${paths.components}pages/**/*.js`)
   .pipe(reactRender({type: 'markup'}))
   .pipe(flatten())
   .pipe(rename(function (path) {
@@ -50,7 +56,7 @@ export const buildPhp = () => {
 }
 
 export const buildSass = () => {
-  return src(paths.scss + '/styles.scss', {allowEmpty: true})
+  return src(`${paths.scss}/styles.scss`, {allowEmpty: true})
   .pipe(sassGlob())
   .on('error', onError)
   .pipe(
@@ -66,21 +72,21 @@ export const buildSass = () => {
     })
   )
   .pipe(sourcemaps.write('.'))
-  .pipe(dest(paths.public + '/assets/css/'))
+  .pipe(dest(`${paths.public}/assets/css/`))
 }
 
 export const copyAssets = () => {
-  return src([ paths.assets + '**/*' ])
+  return src(`${paths.assets}**/*`)
   .pipe(dest(paths.public))
 }
 
 export const copyCrapp = () => {
-  return src([ paths.fengelCRApp + 'build/static/**/*' ])
-  .pipe(dest(paths.public + 'assets'))
+  return src(`${paths.fengelCRApp}build/static/**/*`)
+  .pipe(dest(`${paths.public}assets`))
 }
 
 export const injectScripts = () => {
-  const sources = src([paths.public + 'assets/**/*.js', paths.public + 'assets/**/*.css'], {read: false});
+  const sources = src([`${paths.public}assets/**/*.js`, `${paths.public}assets/**/*.css`], {read: false});
     return src(paths.public + '*.php')
     .pipe(inject(sources, {ignorePath: 'public', addPrefix: '/wp-content/themes/wp-theme-fengelCRApp'}))
     .pipe(dest(paths.public))
@@ -88,7 +94,7 @@ export const injectScripts = () => {
 
 export const serve = () => {
   const server = gls.static('public', 3000)
-  watchSrc(['public/**/*.css', 'public/*.html'], function(file) {
+  watchSrc(['public/**/*.css', 'public/*.html'], (file) => {
     server.notify(file).on('error', onError)
   })
   .on('error', onError)
@@ -96,16 +102,16 @@ export const serve = () => {
 }
 
 const watchStyles = () => {
-  return watchSrc(paths.scss + '**/*.scss', buildSass)  
+  return watchSrc(`${paths.scss}**/*.scss`, buildSass)  
 }
 const watchComponentStyles = () => {
-  return watchSrc(paths.components + '**/*.scss', buildSass)
+  return watchSrc(`${paths.components}**/*.scss`, buildSass)
 }
 const watchJs = () => {
-  return watchSrc(paths.components + '**/*.js', buildPhp)
+  return watchSrc(`${paths.components}**/*.js`, series(clearRequireCache, buildInject))
 }
 const watchAssets = () => {
-  return watchSrc(paths.assets + '**/*.*', {cwd: './'}, copyAssets)
+  return watchSrc(`${paths.assets}**/*.*`, {cwd: './'}, copyAssets)
 }
 
 const watchAll = parallel(watchStyles, watchComponentStyles, watchJs, watchAssets)
@@ -124,8 +130,5 @@ export const watchAndServe = parallel(watchAll)
 export const buildInject = series(buildPhp, injectScripts)
 
 export const build = series(clean, parallelTasks, injectScripts, watchAndServe)
-
-
-
 
 export default build
