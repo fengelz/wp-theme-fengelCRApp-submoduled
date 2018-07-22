@@ -9,6 +9,7 @@ function Head(props) {
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
       <link rel="manifest" href="site.webmanifest" />
       <link rel="apple-touch-icon" href="icon.png" />
+      <meta name="google-site-verification" content="M8QltlH4XIp9dUDuBIrhr7KtHka9d0bYFCw7ZUAxx7s" />
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
       {'<!-- inject:css --><!-- endinject -->'}
       { props.children }
